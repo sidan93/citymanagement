@@ -1,4 +1,6 @@
 import { Template } from 'meteor/templating';
+import { ReactiveVar } from 'meteor/reactive-var';
+
 import * as dat from 'dat.gui';
 
 import '/client/main.html'
@@ -6,6 +8,15 @@ import '/client/main.html'
 let cursors;
 let mouse_cursors;
 let camera_constrols;
+let curr_action = new ReactiveVar();
+let curr_sprite = null;
+let last_created = null;
+
+let action_list = {
+  0: 'None',
+  1: 'BuildHouse',
+  2: 'Road'
+};
 
 Template.game.onRendered(function() {
   setTimeout(function() {
@@ -14,8 +25,8 @@ Template.game.onRendered(function() {
 
     let config = {
       type: Phaser.WEBGL,
-      width: 800,
-      height: 800,
+      width: window.innerWidth * window.devicePixelRatio,
+      height: window.innerHeight * window.devicePixelRatio,
       scene: {
         preload: preload,
         create: create,
@@ -29,10 +40,14 @@ Template.game.onRendered(function() {
     {
       let _this = this;
       _this.load.image('house_01', '/assets/house_01.png');
+      _this.load.image('house_02', '/assets/house_2.png');
       _this.load.image('grass_01', '/assets/grass_01.jpg');
+      _this.load.image('gex_grass', '/assets/gex_grass.png');
+      _this.load.image('gex_grass2', '/assets/gex_grass2.png');
       _this.load.image('terr_01', '/assets/terr_01.jpg');
-
-      _this.load.html('gui', '/assets/gui/gui.html')
+      _this.load.image('gex_terr', '/assets/gex_terr.png');
+      _this.load.image('gex_terr2', '/assets/gex_terr2.png');
+      _this.load.image('road', '/assets/road.png');
     }
 
     function create()
@@ -46,37 +61,95 @@ Template.game.onRendered(function() {
         for (let i = 0; i < item.data.length; i++) {
           for (let j = 0; j < item.data[i].length; j++) {
             _this.make.sprite({
-              key: item.data[i][j].terrain % 2 ? 'terr_01' : 'grass_01',
-              x: i * 20,
-              y: j * 20
+              key: item.data[i][j].terrain % 2 ? 'gex_terr2' : 'gex_grass2',
+              x: i * 22,
+              y: i % 2 ? j * 29 - 15 : j * 29
             });
           }
         }
       }); 
 
       // Создадим дома
-      /*
       Towns.find().fetch().forEach(function(item) {
         let i = _this.make.sprite({
-          key: 'house_01',
+          key: 'house_02',
           x: item.position.x,
-          y: item.position.y,
-          scale: {
-            x: 0.1,
-            y: 0.1
-          }
+          y: item.position.y
         });
       });
-      */
 
+      // Событие клика
+      this.input.on('pointerdown', function(pointer) {
+        create_obj(pointer);
+      });
+
+      this.input.on('pointerup', function(pointer) {
+        console.log(pointer);
+        if (curr_action.get()) {
+          curr_action.set(0);
+          curr_sprite.destroy();
+          curr_sprite = null;
+          last_created = null;
+        }
+      });
+
+      this.input.on('pointermove', function(pointer) {
+        if (curr_sprite) {
+          if (curr_action.get() == 1) {
+            curr_sprite.x = parseInt(_this.cameras.main.getWorldPoint(pointer.x, pointer.y).x / 22 + 1) * 22 - 11;
+            curr_sprite.y = parseInt(_this.cameras.main.getWorldPoint(pointer.x, pointer.y).y / 29) * 29 + 7;
+            curr_sprite.y = parseInt(_this.cameras.main.getWorldPoint(pointer.x, pointer.y).x / 22 + 1) % 2 ? curr_sprite.y - 15: curr_sprite.y;
+          }
+          else {
+            curr_sprite.x = parseInt(_this.cameras.main.getWorldPoint(pointer.x, pointer.y).x / 22 + 1) * 22;
+            curr_sprite.y = parseInt(_this.cameras.main.getWorldPoint(pointer.x, pointer.y).y / 29 + 1) * 29;        
+            curr_sprite.y = parseInt(_this.cameras.main.getWorldPoint(pointer.x, pointer.y).x / 22 + 1) % 2 ? curr_sprite.y - 15: curr_sprite.y;    
+          }
+        }
+
+        create_obj(pointer);
+      });
+
+      function create_obj(pointer) {
+        if (pointer.isDown && curr_action.get() && (!last_created|| last_created && (last_created.x != curr_sprite.x || last_created.y != curr_sprite.y))) {
+          if (curr_action.get() == 1) {
+            _this.make.sprite({
+              key: 'house_02',
+              x: curr_sprite.x,
+              y: curr_sprite.y
+            });
+
+            Towns.insert({
+              position: {
+                x: curr_sprite.x,
+                y: curr_sprite.y
+              }
+            })
+          } else {
+            _this.make.sprite({
+              key: 'road',
+              x: curr_sprite.x,
+              y: curr_sprite.y
+            });
+          }
+
+          last_created = {x: curr_sprite.x, y: curr_sprite.y};
+        }
+      }
+
+      // Мини камера
+      this.minimap = this.cameras.add(0, window.innerHeight * window.devicePixelRatio - 300, 300, 300).setZoom(0.1);
+      this.minimap.setBackgroundColor(0x002244);
+
+      // Движение основной камеры
       var cursors = this.input.keyboard.createCursorKeys();
 
       var controlConfig = {
           camera: this.cameras.main,
-          left: cursors.left,
-          right: cursors.right,
-          up: cursors.up,
-          down: cursors.down,
+          left: this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A),
+          right: this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D),
+          up: this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W),
+          down: this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S),
           zoomIn: this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.Q),
           zoomOut: this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.E),
           acceleration: 0.06,
@@ -87,19 +160,15 @@ Template.game.onRendered(function() {
       controls = new Phaser.Cameras.Controls.SmoothedKeyControl(controlConfig);
 
       this.input.keyboard.on('keydown_Z', function (event) {
-
           this.cameras.main.rotation += 0.01;
-
       }, this);
 
       this.input.keyboard.on('keydown_X', function (event) {
-
           this.cameras.main.rotation -= 0.01;
-
       }, this);
 
       var cam = this.cameras.main;
-
+      /*
       gui = new dat.GUI();
 
       var p1 = gui.addFolder('Pointer');
@@ -115,11 +184,39 @@ Template.game.onRendered(function() {
       f1.add(cam, 'rotation').min(0).step(0.01).listen();
       f1.add(cam, 'zoom', 0.1, 2).step(0.1).listen();
       f1.open();
+      */
     }
     function update(time, delta)
     {
+      let _this = this;
+      
       controls.update(delta);
+
+      if (curr_action.get()) {
+        if (!curr_sprite) {
+          curr_sprite = _this.make.sprite({
+              key: curr_action.get() == 1 ? 'house_02' : 'road',
+              x: -100,
+              y: -100
+          });
+        }
+      }
+
+      this.minimap.scrollX = this.cameras.main.scrollX;
+      this.minimap.scrollY = this.cameras.main.scrollY;
     }
 
   }, 2000);
 });
+
+Template.overlay.events({
+  'click .button1': function() {
+    curr_action.set(1);
+  },
+  'click .button2': function() {
+    curr_action.set(2);
+  },
+  'click .button3': function() {
+    curr_action.set(0);
+  }
+})
