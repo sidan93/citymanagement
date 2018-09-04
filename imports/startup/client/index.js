@@ -1,5 +1,6 @@
 import { Template } from 'meteor/templating';
 import { ReactiveVar } from 'meteor/reactive-var';
+import { SpriteFactory } from './sprite_factory'
 
 import * as dat from 'dat.gui';
 
@@ -38,16 +39,7 @@ Template.game.onRendered(function() {
 
     function preload()
     {
-      let _this = this;
-      _this.load.image('house_01', '/assets/house_01.png');
-      _this.load.image('house_02', '/assets/house_2.png');
-      _this.load.image('grass_01', '/assets/grass_01.jpg');
-      _this.load.image('gex_grass', '/assets/gex_grass.png');
-      _this.load.image('gex_grass2', '/assets/gex_grass2.png');
-      _this.load.image('terr_01', '/assets/terr_01.jpg');
-      _this.load.image('gex_terr', '/assets/gex_terr.png');
-      _this.load.image('gex_terr2', '/assets/gex_terr2.png');
-      _this.load.image('road', '/assets/road.png');
+      SpriteFactory.init(this);
     }
 
     function create()
@@ -61,7 +53,7 @@ Template.game.onRendered(function() {
         for (let i = 0; i < item.data.length; i++) {
           for (let j = 0; j < item.data[i].length; j++) {
             _this.make.sprite({
-              key: item.data[i][j].terrain % 2 ? 'gex_terr2' : 'gex_grass2',
+              key: item.data[i][j].terrain % 2 ? SpriteFactory.get('gex_terr2') : SpriteFactory.get('gex_grass2'),
               x: i * 22,
               y: i % 2 ? j * 29 - 15 : j * 29
             });
@@ -186,6 +178,7 @@ Template.game.onRendered(function() {
       f1.open();
       */
     }
+    
     function update(time, delta)
     {
       let _this = this;

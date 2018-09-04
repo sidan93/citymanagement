@@ -12,9 +12,8 @@ Towns = new Mongo.Collection('towns');
 
 /**
  * region - int
- * data - array[][] of Tile
- *
+ * data - array[][] of 
+ *s
  * @type {Mongo.Collection}
  */
 WorldMap = new Mongo.Collection('worldmap');
-
