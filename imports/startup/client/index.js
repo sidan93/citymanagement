@@ -1,10 +1,12 @@
 import { Template } from 'meteor/templating';
 import { ReactiveVar } from 'meteor/reactive-var';
-import { SpriteFactory } from './sprite_factory'
+import { SpriteFactory } from './sprite_factory';
+import { Map } from './map';
+import { Game } from './game';
 
 import * as dat from 'dat.gui';
 
-import '/client/main.html'
+import '/client/main.html';
 
 let cursors;
 let mouse_cursors;
@@ -39,7 +41,9 @@ Template.game.onRendered(function() {
 
     function preload()
     {
+      Game.init(this);
       SpriteFactory.init(this);
+      Map.init(this);
     }
 
     function create()
@@ -49,26 +53,7 @@ Template.game.onRendered(function() {
       // Создадим gui
 
       // Создадим карту
-      WorldMap.find().fetch().forEach(function(item) {
-        for (let i = 0; i < item.data.length; i++) {
-          for (let j = 0; j < item.data[i].length; j++) {
-            _this.make.sprite({
-              key: item.data[i][j].terrain % 2 ? SpriteFactory.get('gex_terr2') : SpriteFactory.get('gex_grass2'),
-              x: i * 22,
-              y: i % 2 ? j * 29 - 15 : j * 29
-            });
-          }
-        }
-      }); 
-
-      // Создадим дома
-      Towns.find().fetch().forEach(function(item) {
-        let i = _this.make.sprite({
-          key: 'house_02',
-          x: item.position.x,
-          y: item.position.y
-        });
-      });
+      Map.draw();
 
       // Событие клика
       this.input.on('pointerdown', function(pointer) {
@@ -76,7 +61,6 @@ Template.game.onRendered(function() {
       });
 
       this.input.on('pointerup', function(pointer) {
-        console.log(pointer);
         if (curr_action.get()) {
           curr_action.set(0);
           curr_sprite.destroy();
@@ -91,8 +75,7 @@ Template.game.onRendered(function() {
             curr_sprite.x = parseInt(_this.cameras.main.getWorldPoint(pointer.x, pointer.y).x / 22 + 1) * 22 - 11;
             curr_sprite.y = parseInt(_this.cameras.main.getWorldPoint(pointer.x, pointer.y).y / 29) * 29 + 7;
             curr_sprite.y = parseInt(_this.cameras.main.getWorldPoint(pointer.x, pointer.y).x / 22 + 1) % 2 ? curr_sprite.y - 15: curr_sprite.y;
-          }
-          else {
+          } else {
             curr_sprite.x = parseInt(_this.cameras.main.getWorldPoint(pointer.x, pointer.y).x / 22 + 1) * 22;
             curr_sprite.y = parseInt(_this.cameras.main.getWorldPoint(pointer.x, pointer.y).y / 29 + 1) * 29;        
             curr_sprite.y = parseInt(_this.cameras.main.getWorldPoint(pointer.x, pointer.y).x / 22 + 1) % 2 ? curr_sprite.y - 15: curr_sprite.y;    
@@ -106,7 +89,7 @@ Template.game.onRendered(function() {
         if (pointer.isDown && curr_action.get() && (!last_created|| last_created && (last_created.x != curr_sprite.x || last_created.y != curr_sprite.y))) {
           if (curr_action.get() == 1) {
             _this.make.sprite({
-              key: 'house_02',
+              key: SpriteFactory.get('house_02'),
               x: curr_sprite.x,
               y: curr_sprite.y
             });
@@ -119,7 +102,7 @@ Template.game.onRendered(function() {
             })
           } else {
             _this.make.sprite({
-              key: 'road',
+              key: SpriteFactory.get('road'),
               x: curr_sprite.x,
               y: curr_sprite.y
             });
@@ -178,7 +161,7 @@ Template.game.onRendered(function() {
       f1.open();
       */
     }
-    
+
     function update(time, delta)
     {
       let _this = this;
@@ -188,7 +171,7 @@ Template.game.onRendered(function() {
       if (curr_action.get()) {
         if (!curr_sprite) {
           curr_sprite = _this.make.sprite({
-              key: curr_action.get() == 1 ? 'house_02' : 'road',
+              key: curr_action.get() == 1 ? SpriteFactory.get('house_02') : SpriteFactory.get('road'),
               x: -100,
               y: -100
           });

@@ -14,6 +14,10 @@ let assetsList = {
     'house_02': {
         key: 'house_02',
         file: 'house_2.png'
+    },
+    'grass_01': {
+        key: 'grass_01',
+        file: 'grass_01.png'
     }
 }; 
 
