@@ -57,60 +57,15 @@ Template.game.onRendered(function() {
 
       // Событие клика
       this.input.on('pointerdown', function(pointer) {
-        create_obj(pointer);
+        let cords = _this.cameras.main.getWorldPoint(pointer.x, pointer.y);
+        Game.build(cords.x, cords.y);
       });
 
       this.input.on('pointerup', function(pointer) {
-        if (curr_action.get()) {
-          curr_action.set(0);
-          curr_sprite.destroy();
-          curr_sprite = null;
-          last_created = null;
-        }
       });
 
       this.input.on('pointermove', function(pointer) {
-        if (curr_sprite) {
-          if (curr_action.get() == 1) {
-            curr_sprite.x = parseInt(_this.cameras.main.getWorldPoint(pointer.x, pointer.y).x / 22 + 1) * 22 - 11;
-            curr_sprite.y = parseInt(_this.cameras.main.getWorldPoint(pointer.x, pointer.y).y / 29) * 29 + 7;
-            curr_sprite.y = parseInt(_this.cameras.main.getWorldPoint(pointer.x, pointer.y).x / 22 + 1) % 2 ? curr_sprite.y - 15: curr_sprite.y;
-          } else {
-            curr_sprite.x = parseInt(_this.cameras.main.getWorldPoint(pointer.x, pointer.y).x / 22 + 1) * 22;
-            curr_sprite.y = parseInt(_this.cameras.main.getWorldPoint(pointer.x, pointer.y).y / 29 + 1) * 29;        
-            curr_sprite.y = parseInt(_this.cameras.main.getWorldPoint(pointer.x, pointer.y).x / 22 + 1) % 2 ? curr_sprite.y - 15: curr_sprite.y;    
-          }
-        }
-
-        create_obj(pointer);
       });
-
-      function create_obj(pointer) {
-        if (pointer.isDown && curr_action.get() && (!last_created|| last_created && (last_created.x != curr_sprite.x || last_created.y != curr_sprite.y))) {
-          if (curr_action.get() == 1) {
-            _this.make.sprite({
-              key: SpriteFactory.get('house_02'),
-              x: curr_sprite.x,
-              y: curr_sprite.y
-            });
-
-            Towns.insert({
-              position: {
-                x: curr_sprite.x,
-                y: curr_sprite.y
-              }
-            })
-          } else {
-            _this.make.sprite({
-              key: SpriteFactory.get('road'),
-              x: curr_sprite.x,
-              y: curr_sprite.y
-            });
-          }
-
-          last_created = {x: curr_sprite.x, y: curr_sprite.y};
-        }
-      }
 
       // Мини камера
       this.minimap = this.cameras.add(0, window.innerHeight * window.devicePixelRatio - 300, 300, 300).setZoom(0.1);
@@ -168,16 +123,6 @@ Template.game.onRendered(function() {
       
       controls.update(delta);
 
-      if (curr_action.get()) {
-        if (!curr_sprite) {
-          curr_sprite = _this.make.sprite({
-              key: curr_action.get() == 1 ? SpriteFactory.get('house_02') : SpriteFactory.get('road'),
-              x: -100,
-              y: -100
-          });
-        }
-      }
-
       this.minimap.scrollX = this.cameras.main.scrollX;
       this.minimap.scrollY = this.cameras.main.scrollY;
     }
@@ -187,6 +132,7 @@ Template.game.onRendered(function() {
 
 Template.overlay.events({
   'click .button1': function() {
+    Game.startBuild('house_03');
     curr_action.set(1);
   },
   'click .button2': function() {

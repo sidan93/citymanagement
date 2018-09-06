@@ -18,6 +18,14 @@ let assetsList = {
     'grass_01': {
         key: 'grass_01',
         file: 'grass_01.png'
+    },
+    'house_03': {
+        key: 'house_03',
+        file: 'house_03.png',
+        offset: {
+            x: 0,
+            y: 15
+        }
     }
 }; 
 

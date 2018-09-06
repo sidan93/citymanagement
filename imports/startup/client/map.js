@@ -22,9 +22,7 @@ class Map {
     _this._drawSquare();
 
     _this._building.forEach(item => {
-      _this._phaser.make.sprite({
-
-      });
+      SpriteFactory.getSprite('house_03', item.position.x, item.position.y);
     });
   }
 
@@ -55,6 +53,17 @@ class Map {
         }
       }
     });
+  }
+
+  static cordToMap(x, y, offset) {
+    let i = parseInt(x / 30);
+    let j = parseInt(y / 30);
+    return {
+      i: i,
+      j: j,
+      x: offset ? i*30 + offset.x: i*30,
+      y: offset ? j*30 + offset.y: j*30,
+    }
   }
 }
 

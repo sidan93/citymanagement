@@ -42,6 +42,18 @@ class SpriteFactory {
         this._loadSprite(sprite)
     }
 
+    static getSprite(key, x, y) {
+        return _this._phaser.make.sprite({
+            key: key,
+            x: x,
+            y: y
+        });
+    }
+
+    static getOffset(spriteKey) {
+        return assetsList[spriteKey].offset;
+    }
+
     static _loadSprite(sprite) {
         _this._phaser.load.image(sprite.key, '/assets/' + sprite.file);
         _this._loadedImage.push(sprite.key);
