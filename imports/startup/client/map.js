@@ -1,12 +1,23 @@
-import { SpriteFactory } from './sprite_factory'
+import { SpriteFactory } from './sprite_factory';
+import { MapLayer } from './mapLayer';
+import { Building } from './gameObjects/building';
+import { vSelectedObject } from './interface/vars';
+
 
 class Map {
   static type = 'Map';
 
   static _phaser;
 
-  static _terrain = [];
-  static _building = [];
+  static _worldMap = [];
+  static _mapBuilding = [];
+
+  static mapLayers = {
+    Terrain: 'Terrain',
+    Building: 'Building'
+  }
+  static _terrain;
+  static _building;
 
   constructor(enforcer) {
     throw new Error('Cannot construct singleton Map');
@@ -14,45 +25,83 @@ class Map {
 
   static init(phaser) {
     _this._phaser = phaser; 
-    _this._terrain = WorldMap.find().fetch();        
-    _this._building = Buildings.find().fetch();
+    
+    _this._terrain = new MapLayer('Terrain');
+    _this._building = new MapLayer('Building');
+
+    _this._worldMap = WorldMap.find();  
+    
+    _this._mapBuilding = Buildings.find();
   }
 
-  static draw() {
-    _this._drawSquare();
-
-    _this._building.forEach(item => {
-      SpriteFactory.getSprite('house_03', item.position.x, item.position.y);
+  static draw() { 
+    // Подписываемся на события, только во время отрисоки, иначе фазер еще может не гразануться
+    _this._worldMap.observeChanges({
+      added(key, value) {
+        _this._drawWorldTerrain(value);
+      }
     });
-  }
-
-  static _drawGex() {
-    // TODO пока что отказываюсь, т.к. долго делать
-    _this._terrain.forEach(item => {
-      for (let i = 0; i < item.data.length; i++) {
-        for (let j = 0; j < item.data[i].length; j++) {
-          _this._phaser.make.sprite({
-            key: item.data[i][j].terrain % 2 ? SpriteFactory.get('gex_terr2') : SpriteFactory.get('gex_grass2'),
-            x: i * 22,
-            y: i % 2 ? j * 29 - 15 : j * 29
-          });
-        }
+    _this._mapBuilding.observeChanges({
+      added(key, value) {
+        _this._drawWorldBuilding(key, value);
       }
     });
   }
 
-  static _drawSquare() {
-    _this._terrain.forEach(item => {
-      for (let i = 0; i < item.data.length; i++) {
-        for (let j = 0; j < item.data[i].length; j++) {
-          _this._phaser.make.sprite({
-            key: SpriteFactory.get('grass_01'),
-            x: i * 30,
-            y: j * 30
-          });
-        }
+  static addBuilding(i, j, buildingId) {
+    Buildings.insert({
+      position: {
+        i: i,
+        j: j
       }
+    })
+  }
+
+  static _reload(i, j, layer) {
+  }
+
+  static _drawWorldTerrain(item) {
+    for (let i = 0; i < item.data.length; i++) {
+      for (let j = 0; j < item.data[i].length; j++) {
+        _this._phaser.make.sprite({
+          key: SpriteFactory.get('grass_01'),
+          x: i * 30,
+          y: j * 30
+        });
+      }
+    }
+  }
+
+  // Отрисовать здания
+  static _drawWorldBuilding(objectId, item) {
+    // Найдем координаты здания и создадим его
+    let cords = _this.indexToMap(item.position.i, item.position.j, Building.getOffset());
+    let building = _this._phaser.add.existing(new Building(_this._phaser, _this._building.getHash(cords.i, cords.j), cords));
+
+    // Добавим его в менедрж слоев
+    _this._building.add(cords.i, cords.j, {
+      sprite: building,
+      objectId: objectId
     });
+
+    // Активируем на событие
+    building.setInteractive();
+    building.on('pointerdown', function(pointer) {
+      // TODO Пока что просто выводи ID
+      let item = _this._building.get(this.id);
+      vSelectedObject.set({
+        id: item.objectId
+      });
+    })
+  }
+
+  static indexToMap(i, j, offset) {
+    return {
+      i: i,
+      j: j,
+      x: offset ? i * 30 + offset.x: i * 30,
+      y: offset ? j * 30 + offset.y: j * 30,
+    }
   }
 
   static cordToMap(x, y, offset) {
@@ -61,8 +110,8 @@ class Map {
     return {
       i: i,
       j: j,
-      x: offset ? i*30 + offset.x: i*30,
-      y: offset ? j*30 + offset.y: j*30,
+      x: offset ? i * 30 + offset.x: i * 30,
+      y: offset ? j * 30 + offset.y: j * 30,
     }
   }
 }

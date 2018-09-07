@@ -27,3 +27,13 @@ body {
 .overlay .right_panel .button:hover {
   background: #0000DD;
 }
+
+.overlay .left_panel {
+  position: absolute;
+  display: block;
+  left: 0;
+  height: 300px;
+  width: 150px;
+
+  background: yellow;
+}
