@@ -1,12 +1,11 @@
 import { SpriteFactory } from '../sprite_factory'
+import { BaseObject } from './base'
 
-class Building extends Phaser.GameObjects.Sprite {
-  id = 'IdNull';
-  static _spriteKey = 'house_03'
+class Building extends BaseObject {
+  static _spriteKey = 'house_03';
 
   constructor(scene, id, cords) {
-    super(scene, cords.x, cords.y, Building._spriteKey);
-    this.id = id;
+    super(scene, id, cords, Building._spriteKey);
   }
 
   static getOffset() {

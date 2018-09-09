@@ -90,6 +90,7 @@ Template.overlay.events({
     Game.startBuild('house_03');
   },
   'click .button2': function() {
+    Game.startBuild('road_01');
   },
   'click .button3': function() {
     Game.resetAction();

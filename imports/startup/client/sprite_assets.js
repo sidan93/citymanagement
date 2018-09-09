@@ -3,6 +3,10 @@ let assetsList = {
         key: 'road',
         file: 'road.png'
     },
+    'road_01': {
+        key: 'road_01',
+        file: 'road_01.png'
+    },
     'gex_grass2': {
         key: 'gex_grass2',
         file: 'gex_grass2.png',

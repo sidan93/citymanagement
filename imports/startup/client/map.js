@@ -1,6 +1,7 @@
 import { SpriteFactory } from './sprite_factory';
 import { MapLayer } from './mapLayer';
 import { Building } from './gameObjects/building';
+import { Road } from './gameObjects/road'
 import { vSelectedObject } from './interface/vars';
 
 
@@ -50,6 +51,7 @@ class Map {
 
   static addBuilding(i, j, buildingId) {
     Buildings.insert({
+      buildingId: buildingId,
       position: {
         i: i,
         j: j
@@ -74,9 +76,16 @@ class Map {
 
   // Отрисовать здания
   static _drawWorldBuilding(objectId, item) {
+    let structureList = [Building, Road]; 
+
+    let CurStructure = structureList.find(i => i._spriteKey === item.buildingId);
+
+    if (!CurStructure)
+      throw 'Для отрисовки нет нужного строения ' + objectId; 
+
     // Найдем координаты здания и создадим его
-    let cords = _this.indexToMap(item.position.i, item.position.j, Building.getOffset());
-    let building = _this._phaser.add.existing(new Building(_this._phaser, _this._building.getHash(cords.i, cords.j), cords));
+    let cords = _this.indexToMap(item.position.i, item.position.j, CurStructure.getOffset());
+    let building = _this._phaser.add.existing(new CurStructure(_this._phaser, _this._building.getHash(cords.i, cords.j), cords));
 
     // Добавим его в менедрж слоев
     _this._building.add(cords.i, cords.j, {
