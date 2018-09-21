@@ -5,8 +5,8 @@ import { BaseObject } from './base'
 class Road extends BaseObject {
   static _spriteKey = 'road_01';
 
-  constructor(scene, id, cords) {
-    super(scene, id, cords, Road._spriteKey);
+  constructor(scene, id, cords, info) {
+    super(scene, id, cords, Road._spriteKey, info);
   }
 
   static getOffset() {

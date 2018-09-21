@@ -24,9 +24,9 @@ class Game {
 
     _this._phaser.input.on('pointermove', function(pointer) {
       // Если у нас действие рисования, то необходимо передвинуть наш спрайт за мышкой
-      if (_this._action && _this._actionData.sprite) {
+      if (_this._action && _this._action == _this._actionList.StartBuild && _this._actionData.sprite) {
         let cords = _this._phaser.cameras.main.getWorldPoint(pointer.x, pointer.y);
-        let newCords = Map.cordToMap(cords.x, cords.y, SpriteFactory.getOffset(_this._actionData.buildKey));
+        let newCords = Map.cordToMap(cords.x, cords.y, SpriteFactory.getOffset(_this._actionData.structureKey));
         _this._actionData.sprite.i = newCords.i;
         _this._actionData.sprite.j = newCords.j;
         _this._actionData.sprite.x = newCords.x;
@@ -42,18 +42,18 @@ class Game {
     });
   }
 
-  static startBuild(buildKey) {
+  static startBuild(structureKey) {
     _this._action = _this._actionList.StartBuild;
-    let sprite = SpriteFactory.getSprite(buildKey, -100, -100);
+    let sprite = SpriteFactory.getSprite(structureKey, -100, -100);
     _this._actionData = {
-      buildKey: buildKey,
+      structureKey: structureKey,
       sprite: sprite,
     }
   }
 
   static build() {
     if(_this._action === _this._actionList.StartBuild) {
-      Map.addBuilding(_this._actionData.sprite.i, _this._actionData.sprite.j, _this._actionData.buildKey);
+      Map.addBuilding(_this._actionData.structureKey, _this._actionData.sprite.i, _this._actionData.sprite.j);
       _this.resetAction();
     }
   }

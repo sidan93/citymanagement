@@ -49,9 +49,9 @@ class Map {
     });
   }
 
-  static addBuilding(i, j, buildingId) {
+  static addBuilding(structureKey, i, j) {
     Buildings.insert({
-      buildingId: buildingId,
+      structureKey: structureKey,
       position: {
         i: i,
         j: j
@@ -78,7 +78,7 @@ class Map {
   static _drawWorldBuilding(objectId, item) {
     let structureList = [Building, Road]; 
 
-    let CurStructure = structureList.find(i => i._spriteKey === item.buildingId);
+    let CurStructure = structureList.find(i => i._spriteKey === item.structureKey);
 
     if (!CurStructure)
       throw 'Для отрисовки нет нужного строения ' + objectId; 
