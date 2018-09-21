@@ -4,7 +4,6 @@ import { Map } from './map';
 import { Game } from './game';
 import { vSelectedObject } from './interface/vars'
 
-
 import '/client/main.html';
 
 let controls;
