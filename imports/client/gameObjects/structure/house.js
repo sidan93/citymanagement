@@ -30,6 +30,7 @@ class CHouse extends House {
   getInfo() {
     // TODO сделать через fetch
     let object = Buildings.findOne({_id: this.objectKey});
+    if (!object) return null;
     return {
       title: 'Дом',
       position: object.position,

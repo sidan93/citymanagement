@@ -2,6 +2,7 @@ import { Meteor } from 'meteor/meteor'
 import * as faker from 'faker'
 import '/imports/both'
 import { House } from '../both/gameObject/house';
+import { Factory } from '../both/gameObject/factory';
 
 function startSide() {
   console.log('Запускаем фоновую обработку мира');
@@ -27,7 +28,7 @@ function side() {
     } else {
       // Найдем жителю работу 
       let workId = Buildings.findOne({
-        structureKey: 'factory', 
+        structureKey: Factory.key, 
         'people.curr': { $lt: 10 }
       });
       People.insert({

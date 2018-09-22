@@ -10,9 +10,6 @@ let controls;
 
 Template.game.onRendered(function() {
   setTimeout(function() {
-    console.log(WorldMap.find().fetch());
-    console.log(Towns.find().fetch());
-
     let config = {
       type: Phaser.WEBGL,
       width: window.innerWidth * window.devicePixelRatio,

@@ -1,9 +1,7 @@
 import { SpriteFactory } from './sprite_factory'
 import { MapLayer } from './mapLayer'
-import { Road } from './gameObjects/road'
-import { vSelectedObject } from './interface/vars'
 import { CHouse } from './gameObjects/structure/house'
-import { Factory } from './gameObjects/structure/factory'
+import { CFactory } from './gameObjects/structure/factory'
 
 class Map {
   static type = 'Map';
@@ -30,8 +28,7 @@ class Map {
     _this._terrain = new MapLayer('Terrain');
     _this._building = new MapLayer('Building');
 
-    _this._worldMap = WorldMap.find();  
-    
+    _this._worldMap = WorldMap.find();      
     _this._mapBuilding = Buildings.find();
   }
 
@@ -76,7 +73,7 @@ class Map {
 
   // Отрисовать здания
   static _drawWorldBuilding(key, item) {
-    let structureList = [CHouse]; 
+    let structureList = [CHouse, CFactory]; 
 
     let CurStructure = structureList.find(i => i.key === item.structureKey);
 

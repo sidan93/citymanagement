@@ -1,26 +1,43 @@
-import { Building } from './building'
+import { Factory } from '../../../both/gameObject/factory';
+import { vSelectedObject } from '../../interface/vars'
 
-class Factory extends Building {
-  static _spriteKey = 'factory';
+class CFactory extends Factory {
+  static spriteKey = 'factory';
+  
+  constructor(objectKey, phaser, cords) {
+    super(objectKey);
 
-  constructor(scene, id, cords, info) {
-    super(scene, id, cords, Factory._spriteKey, info);
+    this.spriteKey = CFactory.spriteKey;
+    this.cords = cords;
 
-    this.info.structure_name = 'Фабрика';
+    this.sprite = phaser.make.sprite({
+      key: this.spriteKey,
+      x: cords.x,
+      y: cords.y
+    })
+
+    // Подготовим курсор
+    this.cursor = Buildings.find({_id: objectKey});
+
+    // Активируем на событие
+    this.sprite.setInteractive();
+    let _this = this;
+    this.sprite.on('pointerdown', function(pointer) {
+      vSelectedObject.set(_this.getInfo());
+    });
   }
 
-  getInfo(additionInfo, factoryRecord) {
-    let recordInfo = {};
-    if (factoryRecord) {
-      recordInfo = {
-        title: 'Фабрика',
-        position: factoryRecord.position,
-        people: factoryRecord.people,
-        peopleNames: People.find({work: factoryRecord._id}).map(i => i.name)
-      }
-    }
-    return super.getInfo({...additionInfo, ...recordInfo});
+  getInfo() {
+    // TODO сделать через fetch
+    let object = Buildings.findOne({_id: this.objectKey});
+    if (!object) return null;
+    return {
+      title: 'Фабрика',
+      position: object.position,
+      people: object.people,
+      peopleNames: People.find({work: object._id}).map(i => i.name)
+    };
   }
 }
 
-export { Factory };
+export { CFactory };

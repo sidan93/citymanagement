@@ -4,6 +4,7 @@ import { House } from '../both/gameObject/house'
 import '/imports/both';
 import './initServer' 
 import './triggers'
+import { Factory } from '../both/gameObject/factory';
 
 Meteor.startup(() => {
   startSide();
@@ -25,9 +26,7 @@ Buildings.allow({
           curr: 0
         };
         return true;
-      case 'road_01':
-        return true;
-      case 'factory':
+      case Factory.key:
         building.people = {
           max: 10,
           curr: 0
