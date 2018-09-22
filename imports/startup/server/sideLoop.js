@@ -1,5 +1,6 @@
 import { Meteor } from 'meteor/meteor'
-import '/imports/startup/both';
+import * as faker from 'faker'
+import '/imports/startup/both'
 
 function startSide() {
   let lastTime = ServerInfo.findOne({name: 'lastUpdateTime'});
@@ -24,10 +25,18 @@ function side() {
 
 
   // Увеличим во всех домах кол-во людей, если их максимум, выселим всех
-  Buildings.find({structureKey: 'house_03'}).fetch().forEach(function(house) {
-    house.people.curr += 1;
-    if (house.people.curr > house.people.max)
+  Buildings.find({structureKey: 'house_03'}).forEach(function(house) {
+    if (house.people.curr == house.people.max) {
+      // Выселим всех
+      People.remove({house: house._id});
       house.people.curr = 0;
+    } else {
+      People.insert({
+        house: house._id,
+        name: faker.fake("{{name.lastName}}, {{name.firstName}} {{name.suffix}}")
+      });
+      house.people.curr += 1;
+    }
     Buildings.upsert({_id: house._id}, house);
   });
 

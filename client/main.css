@@ -41,3 +41,8 @@ body {
   font-size: 18px;
   font-weight: bold;
 }
+
+.overlay .left_panel li {
+  font-size: 10px;
+  color: gray;
+}

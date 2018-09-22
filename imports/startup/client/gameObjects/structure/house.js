@@ -13,7 +13,8 @@ class House extends Building {
     recordInfo = {
       title: 'Дом',
       position: houseRecord.position,
-      people: houseRecord.people
+      people: houseRecord.people,
+      peopleNames: People.find({house: houseRecord._id}).map(i => i.name)
     };
     return super.getInfo({...additionInfo, ...recordInfo});
   }
