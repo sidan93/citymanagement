@@ -96,7 +96,6 @@ class Map {
     // Активируем на событие
     building.setInteractive();
     building.on('pointerdown', function(pointer) {
-      // TODO Пока что просто выводи ID
       let item = _this._building.get(this.id);
       vSelectedObject.set(
         item.sprite.getInfo(
