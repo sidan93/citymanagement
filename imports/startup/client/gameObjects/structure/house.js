@@ -10,12 +10,12 @@ class House extends Building {
   getInfo(additionInfo, houseRecord) {
     let recordInfo = {};
     if (houseRecord)
-    recordInfo = {
-      title: 'Дом',
-      position: houseRecord.position,
-      people: houseRecord.people,
-      peopleNames: People.find({house: houseRecord._id}).map(i => i.name)
-    };
+      recordInfo = {
+        title: 'Дом',
+        position: houseRecord.position,
+        people: houseRecord.people,
+        peopleNames: People.find({house: houseRecord._id}).map(i => i.name)
+      };
     return super.getInfo({...additionInfo, ...recordInfo});
   }
 }

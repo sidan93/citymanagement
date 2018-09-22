@@ -10,9 +10,15 @@ class Factory extends Building {
   }
 
   getInfo(additionInfo, factoryRecord) {
-    let recordInfo = {
-      pos: 'Позиция ${factoryRecord.pos}'
-    };
+    let recordInfo = {};
+    if (factoryRecord) {
+      recordInfo = {
+        title: 'Фабрика',
+        position: factoryRecord.position,
+        people: factoryRecord.people,
+        peopleNames: People.find({factory: factoryRecord._id}).map(i => i.name)
+      }
+    }
     return super.getInfo({...additionInfo, ...recordInfo});
   }
 }
