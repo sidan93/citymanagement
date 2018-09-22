@@ -1,4 +1,4 @@
-import { Params } from '/imports/startup/both/params'
+import { Params } from '/imports/both/params'
 
 function converScript(oldVer) {
   console.log(`Конвертация с версии ${oldVer} до версии ${Params.CURR_VERSION}`)

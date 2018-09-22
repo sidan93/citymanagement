@@ -1,6 +1,6 @@
 import { Meteor } from 'meteor/meteor'
 import { startSide } from './sideLoop'
-import '/imports/startup/both';
+import '/imports/both';
 import './initServer' 
 import './triggers'
 

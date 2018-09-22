@@ -1,6 +1,6 @@
 import { Meteor } from 'meteor/meteor'
 import * as faker from 'faker'
-import '/imports/startup/both'
+import '/imports/both'
 
 function startSide() {
   console.log('Запускаем фоновую обработку мира');

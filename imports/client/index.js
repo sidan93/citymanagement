@@ -3,7 +3,7 @@ import { SpriteFactory } from './sprite_factory';
 import { Map } from './map';
 import { Game } from './game';
 
-import '/imports/startup/client/interface/events.js';
+import '/imports/client/interface/events.js';
 import '/client/main.html';
 
 let controls;
