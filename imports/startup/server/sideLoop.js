@@ -29,13 +29,17 @@ function side() {
     if (house.people.curr == house.people.max) {
       // Выселим всех
       People.remove({house: house._id});
-      house.people.curr = 0;
     } else {
+      // Найдем жителю работу 
+      let workId = Buildings.findOne({
+        structureKey: 'factory', 
+        'people.curr': { $lt: 50 }
+      });
       People.insert({
         house: house._id,
-        name: faker.fake("{{name.lastName}}, {{name.firstName}} {{name.suffix}}")
+        name: faker.fake("{{name.lastName}}, {{name.firstName}} {{name.suffix}}"),
+        work: workId ? workId._id : null
       });
-      house.people.curr += 1;
     }
     Buildings.upsert({_id: house._id}, house);
   });
