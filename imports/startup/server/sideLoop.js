@@ -3,12 +3,6 @@ import * as faker from 'faker'
 import '/imports/startup/both'
 
 function startSide() {
-  let lastTime = ServerInfo.findOne({name: 'lastUpdateTime'});
-  if (!lastTime)
-    ServerInfo.insert({
-      name: 'lastUpdateTime',
-      value: new Date(0)
-    })
   console.log('Запускаем фоновую обработку мира');
   Meteor.setTimeout(side, 0);
 }

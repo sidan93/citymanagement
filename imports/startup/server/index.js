@@ -1,8 +1,10 @@
 import { Meteor } from 'meteor/meteor'
 import { startSide } from './sideLoop'
+import { init } from './initServer' 
 import '/imports/startup/both';
 
 Meteor.startup(() => {
+  init();
   startSide();
 });
 
