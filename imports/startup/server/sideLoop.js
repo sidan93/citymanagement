@@ -33,7 +33,7 @@ function side() {
       // Найдем жителю работу 
       let workId = Buildings.findOne({
         structureKey: 'factory', 
-        'people.curr': { $lt: 50 }
+        'people.curr': { $lt: 10 }
       });
       People.insert({
         house: house._id,
@@ -41,7 +41,6 @@ function side() {
         work: workId ? workId._id : null
       });
     }
-    Buildings.upsert({_id: house._id}, house);
   });
 
 

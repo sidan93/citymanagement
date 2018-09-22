@@ -16,7 +16,7 @@ class Factory extends Building {
         title: 'Фабрика',
         position: factoryRecord.position,
         people: factoryRecord.people,
-        peopleNames: People.find({factory: factoryRecord._id}).map(i => i.name)
+        peopleNames: People.find({work: factoryRecord._id}).map(i => i.name)
       }
     }
     return super.getInfo({...additionInfo, ...recordInfo});
