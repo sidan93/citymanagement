@@ -11,6 +11,7 @@ class House extends Building {
     let recordInfo = {};
     if (houseRecord)
     recordInfo = {
+      title: 'Дом',
       position: houseRecord.position,
       people: houseRecord.people
     };
