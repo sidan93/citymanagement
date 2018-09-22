@@ -2,8 +2,8 @@ import { Template } from 'meteor/templating';
 import { SpriteFactory } from './sprite_factory';
 import { Map } from './map';
 import { Game } from './game';
-import { vSelectedObject } from './interface/vars'
 
+import '/imports/startup/client/interface/events.js';
 import '/client/main.html';
 
 let controls;
@@ -82,22 +82,4 @@ Template.game.onRendered(function() {
     }
 
   }, 2000);
-});
-
-Template.overlay.events({
-  'click .button1': function() {
-    Game.startBuild('house_03');
-  },
-  'click .button2': function() {
-    Game.startBuild('road_01');
-  },
-  'click .button3': function() {
-    Game.resetAction();
-  }
-})
-
-Template.overlay.helpers({
-  getSelectedInfo: function() {
-    return vSelectedObject.get();
-  }
 });

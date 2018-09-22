@@ -19,3 +19,5 @@ Towns = new Mongo.Collection('towns');
 WorldMap = new Mongo.Collection('worldmap');
 
 Buildings = new Mongo.Collection('buildings');
+
+ServerInfo = new Mongo.Collection('serverInfo');

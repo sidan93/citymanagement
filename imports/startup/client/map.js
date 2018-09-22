@@ -1,9 +1,9 @@
-import { SpriteFactory } from './sprite_factory';
-import { MapLayer } from './mapLayer';
-import { Building } from './gameObjects/building';
+import { SpriteFactory } from './sprite_factory'
+import { MapLayer } from './mapLayer'
 import { Road } from './gameObjects/road'
-import { vSelectedObject } from './interface/vars';
-
+import { vSelectedObject } from './interface/vars'
+import { House } from './gameObjects/structure/house'
+import { Factory } from './gameObjects/structure/factory'
 
 class Map {
   static type = 'Map';
@@ -76,7 +76,7 @@ class Map {
 
   // Отрисовать здания
   static _drawWorldBuilding(objectId, item) {
-    let structureList = [Building, Road]; 
+    let structureList = [Factory, House, Road]; 
 
     let CurStructure = structureList.find(i => i._spriteKey === item.structureKey);
 
@@ -98,9 +98,11 @@ class Map {
     building.on('pointerdown', function(pointer) {
       // TODO Пока что просто выводи ID
       let item = _this._building.get(this.id);
-      vSelectedObject.set({
-        id: item.objectId
-      });
+      vSelectedObject.set(
+        item.sprite.getInfo(
+          {id: item.objectId}, 
+          Buildings.findOne({_id: item.objectId})
+        ));
     })
   }
 

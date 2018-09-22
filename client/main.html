@@ -15,12 +15,17 @@
   <div class="overlay">
     <div class="right_panel">
       <div class="button button1">Создать дом</div>
-      <div class="button button2">Дорогу</div>
-      <div class="button button3">Сбросить</div>
+      <div class="button button2">Создать фабрику</div>
+      <div class="button button3">Создать дорогу</div>
+      <div class="button button4">Сбросить</div>
     </div>
     {{#if getSelectedInfo}}
     <div class="left_panel">
-      <div class="selected_object">{{getSelectedInfo.id}}</div>
+      <div class="selected_object">{{getSelectedInfo.title}}</div>
+      <div class="selected_object">Ключ: {{getSelectedInfo.id}}</div>
+      <div class="selected_object">Позиция: {{getSelectedInfo.position.i}}:{{getSelectedInfo.position.j}}</div>
+      <div class="selected_object">Людей макс: {{getSelectedInfo.people.max}}</div>
+      <div class="selected_object">Людей текущее: {{getSelectedInfo.people.curr}}</div>
     </div>
     {{/if}}
   </div>

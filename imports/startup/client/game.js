@@ -42,7 +42,12 @@ class Game {
     });
   }
 
-  static startBuild(structureKey) {
+  /**
+   * Начать стрительство указанного здания
+   * @param {BaseObject} structure Класс строющего объекта
+   */
+  static startBuild(structure) {
+    let structureKey = structure.getSpriteKey();
     _this._action = _this._actionList.StartBuild;
     let sprite = SpriteFactory.getSprite(structureKey, -100, -100);
     _this._actionData = {

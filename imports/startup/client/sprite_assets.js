@@ -30,6 +30,14 @@ let assetsList = {
             x: 0,
             y: 15
         }
+    },
+    'factory': {
+        key: 'factory',
+        file: 'factory.png',
+        offset: {
+            x: 0,
+            y: 15
+        }
     }
 }; 
 

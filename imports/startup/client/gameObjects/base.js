@@ -3,6 +3,8 @@ class BaseObject extends Phaser.GameObjects.Sprite {
   _localSpriteKey = null;
   info = {};
 
+  static _spriteKey = null;
+
   constructor(scene, id, cords, spriteKey, info) {
     super(scene, cords.x, cords.y, spriteKey);
     this.id = id;
@@ -10,8 +12,13 @@ class BaseObject extends Phaser.GameObjects.Sprite {
     this.info = info || {};
   }
 
-  getInfo() {
-    return this.info;
+  getInfo(additionInfo) {
+    additionInfo = additionInfo || {};
+    return {...this.info, ...additionInfo};
+  }
+
+  static getSpriteKey() {
+    return this._spriteKey;
   }
 }
 

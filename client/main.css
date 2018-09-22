@@ -9,23 +9,24 @@ body {
   position: absolute;
   display: block;
   right: 0;
-  height: 500px;
-  width: 150px;
+  width: 155px;
 
   background: red;
 }
 
 .overlay .right_panel .button {
-  width: 100px;
-  height: 100px;
+  width: 120px;
+  height: 30px;
   border: 1px solid black;
   border-radius: 15px;
-  
+  padding: 5px;
+  margin: 10px;  
   background: blue;
 }
 
 .overlay .right_panel .button:hover {
   background: #0000DD;
+  cursor: pointer;
 }
 
 .overlay .left_panel {
