@@ -1,10 +1,10 @@
 import { Meteor } from 'meteor/meteor'
 import { startSide } from './sideLoop'
-import { init } from './initServer' 
 import '/imports/startup/both';
+import './initServer' 
+import './triggers'
 
 Meteor.startup(() => {
-  init();
   startSide();
 });
 
@@ -44,22 +44,3 @@ Buildings.allow({
   }
 });
 
-
-People.after.insert(function(userId, people) {
-  // Увеличим кол-во жителей в доме, при добавлении человека
-  if (people.house) {
-    Buildings.update({_id: people.house}, { $inc: { 'people.curr': 1 } }, { multi: true });
-  }
-  if (people.work) {
-    Buildings.update({_id: people.work}, { $inc: { 'people.curr': 1 } }, { multi: true });
-  }
-});
-
-People.before.remove(function(userId, people) {
-  if (people.house) {
-    Buildings.update({_id: people.house}, { $inc: { 'people.curr': -1 } }, { multi: true });
-  }
-  if (people.work) {
-    Buildings.update({_id: people.work}, { $inc: { 'people.curr': -1 } }, { multi: true });
-  }
-});
