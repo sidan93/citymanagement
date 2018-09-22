@@ -2,7 +2,7 @@ import { SpriteFactory } from './sprite_factory'
 import { MapLayer } from './mapLayer'
 import { Road } from './gameObjects/road'
 import { vSelectedObject } from './interface/vars'
-import { House } from './gameObjects/structure/house'
+import { CHouse } from './gameObjects/structure/house'
 import { Factory } from './gameObjects/structure/factory'
 
 class Map {
@@ -75,34 +75,22 @@ class Map {
   }
 
   // Отрисовать здания
-  static _drawWorldBuilding(objectId, item) {
-    let structureList = [Factory, House, Road]; 
+  static _drawWorldBuilding(key, item) {
+    let structureList = [CHouse]; 
 
-    let CurStructure = structureList.find(i => i._spriteKey === item.structureKey);
+    let CurStructure = structureList.find(i => i.key === item.structureKey);
 
     if (!CurStructure)
-      throw 'Для отрисовки нет нужного строения ' + objectId; 
+      throw 'Для отрисовки нет нужного строения ' + key; 
 
     // Найдем координаты здания и создадим его
-    let cords = _this.indexToMap(item.position.i, item.position.j, CurStructure.getOffset());
-    let building = _this._phaser.add.existing(new CurStructure(_this._phaser, _this._building.getHash(cords.i, cords.j), cords));
+    let cords = _this.indexToMap(item.position.i, item.position.j, SpriteFactory.getOffset(CurStructure.spriteKey));
+    let structure = new CurStructure(key, _this._phaser, cords);
 
     // Добавим его в менедрж слоев
     _this._building.add(cords.i, cords.j, {
-      sprite: building,
-      objectId: objectId
+      structure: structure
     });
-
-    // Активируем на событие
-    building.setInteractive();
-    building.on('pointerdown', function(pointer) {
-      let item = _this._building.get(this.id);
-      vSelectedObject.set(
-        item.sprite.getInfo(
-          {id: item.objectId}, 
-          Buildings.findOne({_id: item.objectId})
-        ));
-    })
   }
 
   static indexToMap(i, j, offset) {

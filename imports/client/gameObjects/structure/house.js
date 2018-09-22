@@ -1,23 +1,42 @@
-import { Building } from './building'
+import { House } from '../../../both/gameObject/house'
+import { vSelectedObject } from '../../interface/vars'
 
-class House extends Building {
-  static _spriteKey = 'house_03';  
+class CHouse extends House {
+  static spriteKey = 'house_03';
   
-  constructor(scene, id, cords, info) {
-    super(scene, id, cords, House._spriteKey, info);
+  constructor(objectKey, phaser, cords) {
+    super(objectKey);
+
+    this.spriteKey = CHouse.spriteKey;
+    this.cords = cords;
+
+    this.sprite = phaser.make.sprite({
+      key: this.spriteKey,
+      x: cords.x,
+      y: cords.y
+    })
+
+    // Подготовим курсор
+    this.cursor = Buildings.find({_id: objectKey});
+
+    // Активируем на событие
+    this.sprite.setInteractive();
+    let _this = this;
+    this.sprite.on('pointerdown', function(pointer) {
+      vSelectedObject.set(_this.getInfo());
+    });
   }
 
-  getInfo(additionInfo, houseRecord) {
-    let recordInfo = {};
-    if (houseRecord)
-      recordInfo = {
-        title: 'Дом',
-        position: houseRecord.position,
-        people: houseRecord.people,
-        peopleNames: People.find({house: houseRecord._id}).map(i => i.name)
-      };
-    return super.getInfo({...additionInfo, ...recordInfo});
+  getInfo() {
+    // TODO сделать через fetch
+    let object = Buildings.findOne({_id: this.objectKey});
+    return {
+      title: 'Дом',
+      position: object.position,
+      people: object.people,
+      peopleNames: People.find({house: object._id}).map(i => i.name)
+    };
   }
 }
 
-export { House };
+export { CHouse };

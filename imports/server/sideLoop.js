@@ -1,6 +1,7 @@
 import { Meteor } from 'meteor/meteor'
 import * as faker from 'faker'
 import '/imports/both'
+import { House } from '../both/gameObject/house';
 
 function startSide() {
   console.log('Запускаем фоновую обработку мира');
@@ -19,7 +20,7 @@ function side() {
 
 
   // Увеличим во всех домах кол-во людей, если их максимум, выселим всех
-  Buildings.find({structureKey: 'house_03'}).forEach(function(house) {
+  Buildings.find({structureKey: House.key}).forEach(function(house) {
     if (house.people.curr == house.people.max) {
       // Выселим всех
       People.remove({house: house._id});

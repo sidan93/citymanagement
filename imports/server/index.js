@@ -1,5 +1,6 @@
 import { Meteor } from 'meteor/meteor'
 import { startSide } from './sideLoop'
+import { House } from '../both/gameObject/house'
 import '/imports/both';
 import './initServer' 
 import './triggers'
@@ -18,7 +19,7 @@ Buildings.allow({
   insert: function(userID, building) {
     // TODO вынести в общий класс и сделать мультинаследование в клиенте
     switch (building.structureKey) {
-      case 'house_03':
+      case House.key:
         building.people = {
           max: 50,
           curr: 0

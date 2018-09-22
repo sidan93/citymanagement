@@ -26,7 +26,7 @@ class Game {
       // Если у нас действие рисования, то необходимо передвинуть наш спрайт за мышкой
       if (_this._action && _this._action == _this._actionList.StartBuild && _this._actionData.sprite) {
         let cords = _this._phaser.cameras.main.getWorldPoint(pointer.x, pointer.y);
-        let newCords = Map.cordToMap(cords.x, cords.y, SpriteFactory.getOffset(_this._actionData.structureKey));
+        let newCords = Map.cordToMap(cords.x, cords.y, SpriteFactory.getOffset(_this._actionData.spriteKey));
         _this._actionData.sprite.i = newCords.i;
         _this._actionData.sprite.j = newCords.j;
         _this._actionData.sprite.x = newCords.x;
@@ -47,11 +47,11 @@ class Game {
    * @param {BaseObject} structure Класс строющего объекта
    */
   static startBuild(structure) {
-    let structureKey = structure.getSpriteKey();
     _this._action = _this._actionList.StartBuild;
-    let sprite = SpriteFactory.getSprite(structureKey, -100, -100);
+    let sprite = SpriteFactory.getSprite(structure.spriteKey, -100, -100);
     _this._actionData = {
-      structureKey: structureKey,
+      structureKey: structure.key,
+      spriteKey: structure.spriteKey,
       sprite: sprite,
     }
   }
