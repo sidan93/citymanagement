@@ -1,8 +1,9 @@
+import '/imports/both'
 import { Meteor } from 'meteor/meteor'
 import * as faker from 'faker'
-import '/imports/both'
-import { House } from '../both/gameObject/house';
-import { Factory } from '../both/gameObject/factory';
+import { House } from '../both/gameObject/house'
+import { Factory } from '../both/gameObject/factory'
+import { Params } from '/imports/both/params'
 
 function startSide() {
   console.log('Запускаем фоновую обработку мира');
@@ -39,8 +40,7 @@ function side() {
     }
   });
 
-
-  ServerInfo.upsert({name: 'lastUpdateTime'}, {name: 'lastUpdateTime', value: currTime});
+  Params.set(Params.lastUpdateTime, currTime);
   Meteor.setTimeout(side, 1000);
 }
 

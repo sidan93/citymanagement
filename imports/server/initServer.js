@@ -14,4 +14,4 @@ if (lastVersion !== Params.CURR_VERSION) {
 // Проинициализируем первый время последнего обновления
 let lastTime = Params.get(Params.lastUpdateTime);
 if (!lastTime)
-  Params.set(Para.lastUpdateTime, new Date());
+  Params.set(Params.lastUpdateTime, new Date());
