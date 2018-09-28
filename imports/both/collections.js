@@ -18,6 +18,8 @@ Towns = new Mongo.Collection('towns');
  */
 WorldMap = new Mongo.Collection('worldmap');
 
+Regions = new Mongo.Collection('regions');
+
 Buildings = new Mongo.Collection('buildings');
 
 ServerInfo = new Mongo.Collection('serverInfo');

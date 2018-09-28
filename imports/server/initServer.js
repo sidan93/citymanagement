@@ -15,3 +15,18 @@ if (lastVersion !== Params.CURR_VERSION) {
 let lastTime = Params.get(Params.lastUpdateTime);
 if (!lastTime)
   Params.set(Params.lastUpdateTime, new Date());
+
+// создадим единственный регион для начала
+let regions = Regions.find().fetch();
+// если их нет создадим
+if (!regions.length) {
+	console.log('Создаем регион')
+	Regions.insert({
+    number: 1, 
+    name: 'Основной',
+    income: {
+      interval: 5,
+      mapPeople: 10
+    }
+  })
+}

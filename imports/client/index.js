@@ -70,8 +70,6 @@ Template.game.onRendered(function() {
 
     function update(time, delta)
     {
-      let _this = this;
-      
       controls.update(delta);
 
       this.minimap.scrollX = this.cameras.main.scrollX;

@@ -31,11 +31,13 @@ class CHouse extends House {
     // TODO сделать через fetch
     let object = Buildings.findOne({_id: this.objectKey});
     if (!object) return null;
+    let region = Regions.findOne({_id: object.region});
     return {
       title: 'Дом',
       position: object.position,
       people: object.people,
-      peopleNames: People.find({house: object._id}).map(i => i.name)
+      peopleNames: People.find({house: object._id}).map(i => i.name),
+      region: region ? region.name : null
     };
   }
 }

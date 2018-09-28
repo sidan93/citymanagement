@@ -31,11 +31,13 @@ class CFactory extends Factory {
     // TODO сделать через fetch
     let object = Buildings.findOne({_id: this.objectKey});
     if (!object) return null;
+    let region = Regions.findOne({_id: object.region});
     return {
       title: 'Фабрика',
       position: object.position,
       people: object.people,
-      peopleNames: People.find({work: object._id}).map(i => i.name)
+      peopleNames: People.find({work: object._id}).map(i => i.name),
+      region: region ? region.name : null
     };
   }
 }
