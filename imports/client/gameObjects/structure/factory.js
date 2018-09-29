@@ -1,5 +1,5 @@
 import { Factory } from '../../../both/gameObject/factory';
-import { vSelectedObject, vRegionObject } from '../../interface/vars'
+import { InterfaceManager } from '../../interface/manager'
 
 class CFactory extends Factory {
   static spriteKey = 'factory';
@@ -24,8 +24,7 @@ class CFactory extends Factory {
     let _this = this;
     this.sprite.on('pointerdown', function(pointer) {
       if (pointer.buttons === 1) {
-        vRegionObject.set(null);
-        vSelectedObject.set(_this.getInfo());
+        InterfaceManager.showInfo(_this, _this.getInfo());
       }
       else if (pointer.buttons === 2)
         Buildings.remove({_id: _this.objectKey});
