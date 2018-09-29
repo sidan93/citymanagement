@@ -5,8 +5,12 @@ import faker from 'faker'
 People.before.insert(function(userId, people) {
   if (!people.name)
     people.name = faker.fake('{{name.lastName}}, {{name.firstName}} {{name.suffix}}');
-  if (!people.region)
-    people.region = Buildings.findOne({_id: people.house}).region;
+  if (!people.region) {
+    let house = Buildings.findOne({_id: people.house});
+    if (!house)
+      throw `У жителя нет дома ${JSON.stringify(people)}`;
+    people.region = house.region;
+  }
 });
 
 People.after.insert(function(userId, people) {

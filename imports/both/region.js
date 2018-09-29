@@ -21,12 +21,14 @@ class Region {
         // найдем кол-во свободных квартир
     let flatInfo = Buildings.find({region: this.id, structureKey: House.key}).map(i => i.people);
     let freeFlat = _.sum(flatInfo.map(i => i.max - i.curr));
-    let maxFlat = flatInfo.length ? flatInfo.reduce((a, b) => a.max + b.max) : 0;
+    let currFlat = _.sum(flatInfo.map(i => i.curr));
+    let maxFlat = _.sum(flatInfo.map(i => i.max));
 
     // найдем кол-во свободных рабочих мест
     let workInfo = Buildings.find({region: this.id, structureKey: Factory.key}).map(i => i.people);
     let freeWork = _.sum(workInfo.map(i => i.max - i.curr));
-    let maxWork = workInfo.length ? workInfo.reduce((a, b) => a.max + b.max) : 0;
+    let currWork = _.sum(workInfo.map(i => i.curr));
+    let maxWork = _.sum(workInfo.map(i => i.max));
 
     // 100% от квартир, если негде жить, жители не приезжают
     if (!freeFlat)
@@ -34,11 +36,18 @@ class Region {
     
     let currAttractiveness = 100;
 
-    // если нет работы, то -70%
+    // если нет работы, то -%
     if (!freeWork)
-      currAttractiveness -= 70;    
+      currAttractiveness -= 85;  
+      
+    // чем больше район, тем больше привлекательность
+    // нормой считаем 100
+    if (currFlat < 100)
+      currAttractiveness -= 0.9 * (100 - currFlat);
+    else 
+      currAttractiveness += 0.1 * (currFlat - 100);
 
-    return currAttractiveness;
+    return _.round(currAttractiveness, 0);
 
   }
 }
