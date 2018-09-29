@@ -17,6 +17,7 @@
       <div class="button button1">Создать дом</div>
       <div class="button button2">Создать фабрику</div>
       <div class="button button4">Сбросить</div>
+      <div class="button button5">Информация о городе</div>
     </div>
     {{#if getSelectedInfo}}
     <div class="left_panel">
@@ -32,7 +33,13 @@
           <li>{{name}}</li>
         {{/each}}
       {{/if}}
-  </div>
+    </div>
+    {{/if}}
+    {{#if regionInfo}}
+    <div class="left_panel">
+      <div class="selected_object title">{{regionInfo.title}}</div>
+      <div class="selected_object">Ключ: {{regionInfo.id}}</div>
+    </div>
     {{/if}}
   </div>
 </template>

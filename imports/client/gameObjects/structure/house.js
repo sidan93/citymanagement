@@ -23,7 +23,10 @@ class CHouse extends House {
     this.sprite.setInteractive();
     let _this = this;
     this.sprite.on('pointerdown', function(pointer) {
-      vSelectedObject.set(_this.getInfo());
+      if (pointer.buttons === 1)
+        vSelectedObject.set(_this.getInfo());
+      else if (pointer.buttons === 2)
+        Buildings.remove({_id: _this.objectKey});
     });
   }
 

@@ -42,6 +42,9 @@ class Map {
     _this._mapBuilding.observeChanges({
       added(key, value) {
         _this._drawWorldBuilding(key, value);
+      },
+      removed(key) {
+        _this._removeWorldBuilding(key);
       }
     });
   }
@@ -85,9 +88,20 @@ class Map {
     let structure = new CurStructure(key, _this._phaser, cords);
 
     // Добавим его в менедрж слоев
-    _this._building.add(cords.i, cords.j, {
+    _this._building.add(cords.i, cords.j, structure.objectKey, {
       structure: structure
     });
+  }
+
+  static _removeWorldBuilding(key) {
+    let item = _this._building.getByObjectId(key);
+    if (!item) {
+      console.log(`Не удалось удалить строение с ключом ${key} т.к. его нет`);
+      return;
+    }
+
+    item.structure.sprite.destroy();
+    _this._building.removeByKey(key);
   }
 
   static indexToMap(i, j, offset) {

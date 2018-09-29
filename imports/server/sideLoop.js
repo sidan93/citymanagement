@@ -17,11 +17,7 @@ function side() {
   let lastTime = ServerInfo.findOne({name: 'lastUpdateTime'}).value;
   let deltaTime = currTime - lastTime;
   
-  console.log('****************');
-  console.log('Начался тик: ' + currTime);
-  console.log('Прошлый тик: ' + lastTime);
-  console.log('Дельта времени: ' + deltaTime)
-
+  console.log(`**** Новый тик: ${currTime}, прошлый тик: ${lastTime}, дельта времени ${deltaTime}`);
 
   // Увеличим кол-во людей в каждом регионе
   Regions.find().forEach(function (region) {
@@ -38,7 +34,7 @@ function side() {
       if (Math.random() * 100 < currAttractiveness)
         countPeople++;
 
-    console.log(`Приезжает ${countPeople} жителей`);
+        console.log(`Приезжает ${countPeople} жителей`);
     for (let i = 0; i < countPeople; i++) {
       // Найдем жителю работу 
       let work = Buildings.findOne({
@@ -80,7 +76,7 @@ function side() {
   // });
 
   Params.set(Params.lastUpdateTime, currTime);
-  Meteor.setTimeout(side, 1000);
+  Meteor.setTimeout(side, 3000);
 }
 
 export { startSide };

@@ -1,4 +1,6 @@
-import * as faker from 'faker';
+import { House } from '../both/gameObject/house'
+import { Factory } from '../both/gameObject/factory'
+import faker from 'faker'
 
 People.before.insert(function(userId, people) {
   if (!people.name)
@@ -24,6 +26,8 @@ People.after.remove(function(userId, people) {
   if (people.work) {
     Buildings.update({_id: people.work}, {$inc: {'people.curr': -1}}, {multi: true});
   }
+
+  console.log(`Уехал человек ${people.name} из дома ${people.house}`);
 });
 
 Buildings.after.insert(function(userId, building) {
@@ -31,10 +35,10 @@ Buildings.after.insert(function(userId, building) {
 });
 
 Buildings.after.remove(function(userId, building) {
-  if (building.structureKey === 'house_03') {
+  if (building.structureKey === House.key) {
     People.remove({house: building._id});
   }
-  if (building.structureKey === 'factory') {
+  if (building.structureKey === Factory.key) {
     People.update({work: building._id}, {$set: {work: null}});
   }
 

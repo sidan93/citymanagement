@@ -18,7 +18,7 @@ class Region {
   getAttractiveness() {
     // от 0 до 100 в процентах
 
-    // найдем кол-во свободных квартир
+        // найдем кол-во свободных квартир
     let flatInfo = Buildings.find({region: this._id, structureKey: House.key}).map(i => i.people);
     let freeFlat = _.sum(flatInfo.map(i => i.max - i.curr));
     let maxFlat = flatInfo.length ? flatInfo.reduce((a, b) => a.max + b.max) : 0;
