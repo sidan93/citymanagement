@@ -2,6 +2,7 @@ import { Template } from 'meteor/templating';
 import { SpriteFactory } from './sprite_factory';
 import { Map } from './map';
 import { Game } from './game';
+import { InterfaceManager } from './interface/manager'
 
 import '/imports/client/interface/events.js';
 import '/client/main.html';
@@ -31,6 +32,7 @@ Template.game.onRendered(function() {
       Game.init(this);
       SpriteFactory.init(this);
       Map.init(this);
+      InterfaceManager.initNotification();
     }
 
     function create()

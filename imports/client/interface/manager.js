@@ -1,10 +1,35 @@
-import { vSelectedObject, vRegionObject } from './vars'
+import { vSelectedObject, vRegionObject, vNotification } from './vars'
 import { BaseObject } from '../../both/gameObject/base'
 import { Region } from '../../both/region'
 
 class InterfaceManager {
   constructor(enforcer) {
     throw new Error('Cannot construct singleton InterfaceManager');
+  }
+
+  static initNotification() {
+    let peopleCursor = People.find({region: Regions.findOne()._id});
+    peopleCursor.observeChanges({
+      added(key, people) {
+        _this.showNotification(
+          'Новый житель!',
+          `${people.name} поселился в доме ${people.house} и работой ${people.work}`,
+          10000)
+          console.log('создаем уведомление')
+        }
+    });
+  }
+
+  static showNotification(title, message, time) {
+    let notification = {
+      title: title,
+      text: message
+    };
+    let key = message;
+    vNotification.set(key, notification);
+    setTimeout(function() {
+      vNotification.delete(key);
+    }, time);
   }
 
   static showInfo(owner, info) {

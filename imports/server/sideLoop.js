@@ -47,6 +47,9 @@ function side() {
         'people.curr': { $lt: House.maxPeople }
       }).fetch(), i => i.people.curr);
 
+      if (!house)
+        return;
+
       People.insert({
         house: house ? house._id : null,
         work: work ? work._id : null

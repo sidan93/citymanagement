@@ -51,3 +51,24 @@ body {
   position: absolute;
   display: block;
 }
+
+.notification_list {
+  position: absolute;
+  display: block;
+  right: 0;
+  bottom: 0;
+  padding: 5px;
+  background: green;
+}
+
+.notification_list .notification {
+  
+}
+
+.notification_list .notification .title {
+  font-size: 14px;
+  font-weight: bold;
+}
+.notification_list .notification .text {
+  font-size: 14px;
+}

@@ -48,5 +48,13 @@
       <div class="selected_object">Привлекательность: {{getRegionInfo.attractiveness}}%</div>
     </div>
     {{/if}}
+      <div class="notification_list">
+        {{#each notification in getNotification}}
+        <div class="notification">
+          <div class=title>{{notification.title}}</div>
+          <div class="text">{{notification.text}}</div>
+        </div>
+        {{/each}}
+      </div>
   </div>
 </template>
