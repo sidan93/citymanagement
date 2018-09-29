@@ -36,6 +36,7 @@ Template.overlay.events({
       countHouse: house.length,
       countFactory: factory.length,
       countPeople: people.length,
+      countPeopleWithoutWork: people.filter(i => !i.work).length,
       countFreeHousePlace: _.sum(house.map(i => i.people.max - i.people.curr)),
       countFreeFactoryPlace: _.sum(factory.map(i => i.people.max - i.people.curr)),
       attractiveness: region.getAttractiveness()
