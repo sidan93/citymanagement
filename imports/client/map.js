@@ -50,8 +50,10 @@ class Map {
   }
 
   static addBuilding(structureKey, i, j) {
+    // TODO Определение региона надо сделать по другому
     Buildings.insert({
       structureKey: structureKey,
+      region: Regions.findOne()._id,
       position: {
         i: i,
         j: j

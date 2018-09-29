@@ -7,7 +7,7 @@ class Region {
     this.id = id;
 
     if (object) {
-      this._id = object._id;
+      this.id = object._id;
     }
   }
 
@@ -19,12 +19,12 @@ class Region {
     // от 0 до 100 в процентах
 
         // найдем кол-во свободных квартир
-    let flatInfo = Buildings.find({region: this._id, structureKey: House.key}).map(i => i.people);
+    let flatInfo = Buildings.find({region: this.id, structureKey: House.key}).map(i => i.people);
     let freeFlat = _.sum(flatInfo.map(i => i.max - i.curr));
     let maxFlat = flatInfo.length ? flatInfo.reduce((a, b) => a.max + b.max) : 0;
 
     // найдем кол-во свободных рабочих мест
-    let workInfo = Buildings.find({region: this._id, structureKey: Factory.key}).map(i => i.people);
+    let workInfo = Buildings.find({region: this.id, structureKey: Factory.key}).map(i => i.people);
     let freeWork = _.sum(workInfo.map(i => i.max - i.curr));
     let maxWork = workInfo.length ? workInfo.reduce((a, b) => a.max + b.max) : 0;
 

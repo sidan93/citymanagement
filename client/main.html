@@ -35,10 +35,16 @@
       {{/if}}
     </div>
     {{/if}}
-    {{#if regionInfo}}
+    {{#if getRegionInfo}}
     <div class="left_panel">
-      <div class="selected_object title">{{regionInfo.title}}</div>
-      <div class="selected_object">Ключ: {{regionInfo.id}}</div>
+      <div class="selected_object title">{{getRegionInfo.title}}</div>
+      <div class="selected_object">Ключ: {{getRegionInfo.id}}</div>
+      <div class="selected_object">Всего домов: {{getRegionInfo.countHouse}}</div>
+      <div class="selected_object">Всего фабрик: {{getRegionInfo.countFactory}}</div>
+      <div class="selected_object">Всего людей: {{getRegionInfo.countPeople}}</div>
+      <div class="selected_object">Свободно жилья: {{getRegionInfo.countFreeHousePlace}}</div>
+      <div class="selected_object">Свободно работы: {{getRegionInfo.countFreeFactoryPlace}}</div>
+      <div class="selected_object">Привлекательность: {{getRegionInfo.attractiveness}}%</div>
     </div>
     {{/if}}
   </div>

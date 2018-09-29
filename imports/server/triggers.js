@@ -5,6 +5,8 @@ import faker from 'faker'
 People.before.insert(function(userId, people) {
   if (!people.name)
     people.name = faker.fake('{{name.lastName}}, {{name.firstName}} {{name.suffix}}');
+  if (!people.region)
+    people.region = Buildings.findOne({_id: people.house}).region;
 });
 
 People.after.insert(function(userId, people) {
