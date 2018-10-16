@@ -1,3 +1,5 @@
+import { Mongo } from 'meteor/mongo';
+
 /**
  * Object data
  * key - uuid
@@ -7,7 +9,7 @@
  * size - int
  * @type {Mongo.Collection}
  */
-Towns = new Mongo.Collection('towns');
+const Towns = new Mongo.Collection('towns');
 
 
 /**
@@ -16,12 +18,14 @@ Towns = new Mongo.Collection('towns');
  *s
  * @type {Mongo.Collection}
  */
-WorldMap = new Mongo.Collection('worldmap');
+const WorldMap = new Mongo.Collection('worldmap');
 
-Regions = new Mongo.Collection('regions');
+const Regions = new Mongo.Collection('regions');
 
-Buildings = new Mongo.Collection('buildings');
+const Buildings = new Mongo.Collection('buildings');
 
-ServerInfo = new Mongo.Collection('serverInfo');
+const ServerInfo = new Mongo.Collection('serverInfo');
 
-People = new Mongo.Collection('people');
+const People = new Mongo.Collection('people');
+
+export { Towns, WorldMap, Regions, Buildings, ServerInfo, People };

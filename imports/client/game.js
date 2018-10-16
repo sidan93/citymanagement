@@ -13,7 +13,7 @@ class Game {
     sprite: null
   };
 
-  constructor(enforcer) {
+  constructor() {
     throw new Error('Cannot construct singleton Game');
   }
 
@@ -34,7 +34,7 @@ class Game {
       }
     });
 
-    _this._phaser.input.on('pointerdown', function(pointer) {
+    _this._phaser.input.on('pointerdown', function() {
       // Если мы строим, то при нажатии надо построить здание
       if (_this._action === _this._actionList.StartBuild) {
         _this.build();
@@ -53,7 +53,7 @@ class Game {
       structureKey: structure.key,
       spriteKey: structure.spriteKey,
       sprite: sprite,
-    }
+    };
   }
 
   static build() {

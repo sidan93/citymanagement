@@ -1,6 +1,7 @@
 import { House } from './gameObject/house';
 import { Factory } from './gameObject/factory';
-import _ from 'lodash'
+import { Regions, Buildings } from './collections';
+import _ from 'lodash';
 
 class Region {
   constructor(id, object) {
@@ -18,21 +19,18 @@ class Region {
   getAttractiveness() {
     // от 0 до 100 в процентах
 
-        // найдем кол-во свободных квартир
+    // найдем кол-во свободных квартир
     let flatInfo = Buildings.find({region: this.id, structureKey: House.key}).map(i => i.people);
     let freeFlat = _.sum(flatInfo.map(i => i.max - i.curr));
     let currFlat = _.sum(flatInfo.map(i => i.curr));
-    let maxFlat = _.sum(flatInfo.map(i => i.max));
 
     // найдем кол-во свободных рабочих мест
     let workInfo = Buildings.find({region: this.id, structureKey: Factory.key}).map(i => i.people);
     let freeWork = _.sum(workInfo.map(i => i.max - i.curr));
-    let currWork = _.sum(workInfo.map(i => i.curr));
-    let maxWork = _.sum(workInfo.map(i => i.max));
 
     // 100% от квартир, если негде жить, жители не приезжают
     if (!freeFlat)
-        return 0;
+      return 0;
     
     let currAttractiveness = 100;
 

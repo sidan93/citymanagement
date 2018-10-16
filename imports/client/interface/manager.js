@@ -1,9 +1,10 @@
-import { vSelectedObject, vRegionObject, vNotification } from './vars'
-import { BaseObject } from '../../both/gameObject/base'
-import { Region } from '../../both/region'
+import { vSelectedObject, vRegionObject, vNotification } from './vars';
+import { BaseObject } from '../../both/gameObject/base';
+import { Region } from '../../both/region';
+import { Regions, People } from '../../both/collections';
 
 class InterfaceManager {
-  constructor(enforcer) {
+  constructor() {
     throw new Error('Cannot construct singleton InterfaceManager');
   }
 
@@ -14,9 +15,9 @@ class InterfaceManager {
         _this.showNotification(
           'Новый житель!',
           `${people.name} поселился в доме ${people.house} и работой ${people.work}`,
-          10000)
-          console.log('создаем уведомление')
-        }
+          10000);
+        console.log('создаем уведомление');
+      }
     });
   }
 
@@ -35,7 +36,7 @@ class InterfaceManager {
   static showInfo(owner, info) {
     if (owner instanceof BaseObject) {
       vRegionObject.set(null);
-      vSelectedObject.set(info)
+      vSelectedObject.set(info);
     }
     if (owner instanceof Region) {
       vSelectedObject.set(null);
@@ -51,4 +52,4 @@ class InterfaceManager {
 
 let _this = InterfaceManager;
 
-export { InterfaceManager }
+export { InterfaceManager };

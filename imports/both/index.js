@@ -1,2 +1,2 @@
-import './collections.js'
-import './tile.js'
+import './collections.js';
+import './tile.js';

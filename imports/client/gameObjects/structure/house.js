@@ -1,5 +1,6 @@
-import { House } from '../../../both/gameObject/house'
-import { InterfaceManager } from '../../interface/manager'
+import { Buildings, Regions, People } from '../../../both/collections';
+import { House } from '../../../both/gameObject/house';
+import { InterfaceManager } from '../../interface/manager';
 
 class CHouse extends House {
   static spriteKey = 'house_03';
@@ -14,7 +15,7 @@ class CHouse extends House {
       key: this.spriteKey,
       x: cords.x,
       y: cords.y
-    })
+    });
 
     // Подготовим курсор
     this.cursor = Buildings.find({_id: objectKey});

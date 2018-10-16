@@ -1,7 +1,8 @@
-import { Params } from '/imports/both/params'
+import { Regions } from '../both/collections';
+import { Params } from '/imports/both/params';
 
 function converScript(oldVer) {
-  console.log(`Конвертация с версии ${oldVer} до версии ${Params.CURR_VERSION}`)
+  console.log(`Конвертация с версии ${oldVer} до версии ${Params.CURR_VERSION}`);
 }
 
 // Проинициализируем версию сервера
@@ -20,13 +21,13 @@ if (!lastTime)
 let regions = Regions.find().fetch();
 // если их нет создадим
 if (!regions.length) {
-	console.log('Создаем регион')
-	Regions.insert({
+  console.log('Создаем регион');
+  Regions.insert({
     number: 1, 
     name: 'Основной',
     income: {
       interval: 5,
       mapPeople: 10
     }
-  })
+  });
 }

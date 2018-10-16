@@ -1,5 +1,6 @@
+import { Buildings, Regions, People } from '../../../both/collections';
 import { Factory } from '../../../both/gameObject/factory';
-import { InterfaceManager } from '../../interface/manager'
+import { InterfaceManager } from '../../interface/manager';
 
 class CFactory extends Factory {
   static spriteKey = 'factory';
@@ -14,7 +15,7 @@ class CFactory extends Factory {
       key: this.spriteKey,
       x: cords.x,
       y: cords.y
-    })
+    });
 
     // Подготовим курсор
     this.cursor = Buildings.find({_id: objectKey});

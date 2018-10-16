@@ -1,11 +1,11 @@
 class Mouse {
-  static _phaser = phaser;
+  static _phaser;
 
   static actionList = {
 
   };
 
-  constructor(enforcer) {
+  constructor() {
     throw new Error('Cannot construct singleton Mouse');
   }
 

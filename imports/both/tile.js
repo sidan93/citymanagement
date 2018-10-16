@@ -4,4 +4,4 @@ class Tile {
   }
 }
 
-export { Tile }
+export { Tile };

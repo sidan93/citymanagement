@@ -1,3 +1,5 @@
+import { ServerInfo } from './collections';
+
 class Params {
   static version = 'version';
   static lastUpdateTime = 'lastUpdateTime'
@@ -11,7 +13,5 @@ class Params {
     return ServerInfo.upsert({name: paramKey}, {name: paramKey, value: value});
   }
 }
-
-let _this = Params;
 
 export { Params };

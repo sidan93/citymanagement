@@ -1,6 +1,7 @@
-import { House } from '../both/gameObject/house'
-import { Factory } from '../both/gameObject/factory'
-import faker from 'faker'
+import { House } from '../both/gameObject/house';
+import { Factory } from '../both/gameObject/factory';
+import faker from 'faker';
+import { People, Buildings } from '../both/collections';
 
 People.before.insert(function(userId, people) {
   if (!people.name)

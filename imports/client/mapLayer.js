@@ -8,7 +8,7 @@ class MapLayer {
   }
 
   add(i, j, objectKey, value) {
-    let hash = this.getHash(i, j)
+    let hash = this.getHash(i, j);
     this._data[hash] = value;
     this._matching[objectKey] = hash;
   }
@@ -38,6 +38,6 @@ class MapLayer {
     delete this._data[this._matching[key]];
     delete this._matching[key];
   }
-};
+}
 
 export { MapLayer };

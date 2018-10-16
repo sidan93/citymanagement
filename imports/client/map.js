@@ -1,7 +1,8 @@
-import { SpriteFactory } from './sprite_factory'
-import { MapLayer } from './mapLayer'
-import { CHouse } from './gameObjects/structure/house'
-import { CFactory } from './gameObjects/structure/factory'
+import { SpriteFactory } from './sprite_factory';
+import { MapLayer } from './mapLayer';
+import { CHouse } from './gameObjects/structure/house';
+import { CFactory } from './gameObjects/structure/factory';
+import {WorldMap, Buildings, Regions} from '../both/collections';
 
 class Map {
   static type = 'Map';
@@ -18,7 +19,7 @@ class Map {
   static _terrain;
   static _building;
 
-  constructor(enforcer) {
+  constructor() {
     throw new Error('Cannot construct singleton Map');
   }
 
@@ -58,10 +59,7 @@ class Map {
         i: i,
         j: j
       }
-    })
-  }
-
-  static _reload(i, j, layer) {
+    });
   }
 
   static _drawWorldTerrain(item) {
@@ -112,7 +110,7 @@ class Map {
       j: j,
       x: offset ? i * 30 + offset.x: i * 30,
       y: offset ? j * 30 + offset.y: j * 30,
-    }
+    };
   }
 
   static cordToMap(x, y, offset) {
@@ -123,7 +121,7 @@ class Map {
       j: j,
       x: offset ? i * 30 + offset.x: i * 30,
       y: offset ? j * 30 + offset.y: j * 30,
-    }
+    };
   }
 }
 

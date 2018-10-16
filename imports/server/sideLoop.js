@@ -1,10 +1,11 @@
-import '/imports/both'
-import { Meteor } from 'meteor/meteor'
-import { House } from '../both/gameObject/house'
-import { Factory } from '../both/gameObject/factory'
-import { Region } from '../both/region'
-import { Params } from '/imports/both/params'
-import _ from 'lodash'
+import '/imports/both';
+import { Meteor } from 'meteor/meteor';
+import { House } from '../both/gameObject/house';
+import { Factory } from '../both/gameObject/factory';
+import { Region } from '../both/region';
+import { Params } from '/imports/both/params';
+import _ from 'lodash';
+import { Regions, ServerInfo, Buildings, People } from '../both/collections';
 
 
 function startSide() {
@@ -34,7 +35,7 @@ function side() {
       if (Math.random() * 100 < currAttractiveness)
         countPeople++;
 
-        console.log(`Приезжает ${countPeople} жителей`);
+    console.log(`Приезжает ${countPeople} жителей`);
     for (let i = 0; i < countPeople; i++) {
       // Найдем жителю работу
       let work = _.minBy(Buildings.find({
