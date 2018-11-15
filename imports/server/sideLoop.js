@@ -18,7 +18,7 @@ function side() {
   let lastTime = ServerInfo.findOne({name: 'lastUpdateTime'}).value;
   let deltaTime = currTime - lastTime;
   
-  console.log(`**** Новый тик: ${currTime}, прошлый тик: ${lastTime}, дельта времени ${deltaTime}`);
+  console.log(`**** Дельта времени ${deltaTime}`);
 
   // Увеличим кол-во людей в каждом регионе
   Regions.find().forEach(function (region) {

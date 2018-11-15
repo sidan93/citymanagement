@@ -2,7 +2,7 @@ import { Regions } from '../both/collections';
 import { Params } from '/imports/both/params';
 
 function converScript(oldVer) {
-  console.log(`Конвертация с версии ${oldVer} до версии ${Params.CURR_VERSION}`);
+  console.log(`Конвертация с версии ${JSON.stringify(oldVer)} до версии ${Params.CURR_VERSION}`);
 }
 
 // Проинициализируем версию сервера
