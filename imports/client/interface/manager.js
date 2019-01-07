@@ -1,4 +1,4 @@
-import { vSelectedObject, vRegionObject, vNotification } from './vars';
+import { vSelectedObject, vRegionObject, vNotification, vDebugInfo } from './vars';
 import { BaseObject } from '../../both/gameObject/base';
 import { Region } from '../../both/region';
 import { Regions, People } from '../../both/collections';
@@ -15,13 +15,14 @@ class InterfaceManager {
         _this.showNotification(
           'Новый житель!',
           `${people.name} поселился в доме ${people.house} и работой ${people.work}`,
-          10000);
+          1000);
         console.log('создаем уведомление');
       }
     });
   }
 
   static showNotification(title, message, time) {
+    time = time || 1000;
     let notification = {
       title: title,
       text: message
@@ -47,6 +48,15 @@ class InterfaceManager {
   static resetInfo() {
     vSelectedObject.set(null);
     vRegionObject.set(null);
+  }
+
+  static setDebugInfo(coords) {
+    vDebugInfo.set({
+      mouseX: coords.x,
+      mouseY: coords.y,
+      mouseI: coords.i,
+      mouseJ: coords.j
+    });
   }
 }
 

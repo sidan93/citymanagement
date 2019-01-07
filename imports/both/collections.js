@@ -9,7 +9,7 @@ import { Mongo } from 'meteor/mongo';
  * size - int
  * @type {Mongo.Collection}
  */
-const Towns = new Mongo.Collection('towns');
+Towns = new Mongo.Collection('towns');
 
 
 /**
@@ -18,14 +18,14 @@ const Towns = new Mongo.Collection('towns');
  *s
  * @type {Mongo.Collection}
  */
-const WorldMap = new Mongo.Collection('worldmap');
+WorldMap = new Mongo.Collection('worldmap');
 
-const Regions = new Mongo.Collection('regions');
+Regions = new Mongo.Collection('regions');
 
-const Buildings = new Mongo.Collection('buildings');
+Buildings = new Mongo.Collection('buildings');
 
-const ServerInfo = new Mongo.Collection('serverInfo');
+ServerInfo = new Mongo.Collection('serverInfo');
 
-const People = new Mongo.Collection('people');
+People = new Mongo.Collection('people');
 
 export { Towns, WorldMap, Regions, Buildings, ServerInfo, People };

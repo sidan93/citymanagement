@@ -56,5 +56,13 @@
         </div>
         {{/each}}
       </div>
+    {{#if getDebugInfo}}
+      <div class="debug_info">
+        <div class="title">Позиция мыши (экран)</div>
+        <div class="text">X: {{getDebugInfo.mouseX}}, Y: {{getDebugInfo.mouseY}}</div>
+        <div class="title">Координаты мыши</div>
+        <div class="text">I: {{getDebugInfo.mouseI}}, J: {{getDebugInfo.mouseJ}}</div>
+      </div>
+    {{/if}}
   </div>
 </template>

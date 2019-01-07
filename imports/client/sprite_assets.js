@@ -27,16 +27,16 @@ let assetsList = {
     key: 'house_03',
     file: 'house_03.png',
     offset: {
-      x: 0,
-      y: 15
+      x: 45,
+      y: 30
     }
   },
   'factory': {
     key: 'factory',
     file: 'factory.png',
     offset: {
-      x: 0,
-      y: 15
+      x: 45,
+      y: 30
     }
   }
 }; 

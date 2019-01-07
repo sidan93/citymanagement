@@ -73,6 +73,8 @@ Template.game.onRendered(function() {
     {
       controls.update(delta);
 
+      Map.update();
+
       this.minimap.scrollX = this.cameras.main.scrollX;
       this.minimap.scrollY = this.cameras.main.scrollY;
     }

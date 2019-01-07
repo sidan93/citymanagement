@@ -3,7 +3,7 @@ import { CFactory } from '../gameObjects/structure/factory';
 import { CHouse } from '../gameObjects/structure/house';
 import { Region } from '../../both/region';
 import _ from 'lodash';
-import { vSelectedObject, vRegionObject, vNotification } from './vars';
+import { vSelectedObject, vRegionObject, vNotification, vDebugInfo } from './vars';
 import { InterfaceManager } from './manager';
 import { Regions, Buildings, People } from '../../both/collections';
 
@@ -55,5 +55,8 @@ Template.overlay.helpers({
   getNotification: function() {
     vNotification.allDeps.depend();
     return Object.values(vNotification.keys).map(i=>JSON.parse(i));
+  },
+  getDebugInfo: function() {
+    return vDebugInfo.get();
   }
 });

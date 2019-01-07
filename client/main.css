@@ -72,3 +72,20 @@ body {
 .notification_list .notification .text {
   font-size: 14px;
 }
+
+.debug_info {
+  position: absolute;
+  display: block;
+  left: 0;
+  bottom: 0;
+  background: yellow;
+}
+
+.debug_info .title {
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.debug_info .text {
+  font-size: 14px;
+}

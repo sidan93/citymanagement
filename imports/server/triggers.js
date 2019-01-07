@@ -37,6 +37,10 @@ People.after.remove(function(userId, people) {
   console.log(`Уехал человек ${people.name} из дома ${people.house}`);
 });
 
+Buildings.before.insert(function(userId, building) {
+  
+});
+
 Buildings.after.insert(function(userId, building) {
   console.log(`Построено здание ${JSON.stringify(building)}`);
 });

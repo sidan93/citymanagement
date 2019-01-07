@@ -31,6 +31,10 @@ class Map {
 
     _this._worldMap = WorldMap.find();      
     _this._mapBuilding = Buildings.find();
+
+    _this._grid = [];
+    _this._grid_graphics = phaser.add.graphics({ lineStyle: { width: 5, color: 0xaa00aa, alpha: 0.6 } });
+    _this._initGrid();
   }
 
   static draw() { 
@@ -48,6 +52,13 @@ class Map {
         _this._removeWorldBuilding(key);
       }
     });
+
+    _this._grid.forEach(element => {
+      _this._grid_graphics.strokeLineShape(element);  
+    });
+  }
+
+  static update() {
   }
 
   static addBuilding(structureKey, i, j) {
@@ -60,6 +71,15 @@ class Map {
         j: j
       }
     });
+  }
+
+  /* global Phaser */
+  static _initGrid() {
+    let _this = this;
+    for (let i = 0; i < 100; i ++) {
+      _this._grid.push(new Phaser.Geom.Line(i * 30, 0, i * 30, 100 * 30));
+      _this._grid.push(new Phaser.Geom.Line(0, i * 30, 100 * 30, i * 30));
+    }
   }
 
   static _drawWorldTerrain(item) {
